@@ -3,7 +3,13 @@ package com.lucascabral.newyorktimesbooks.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lucascabral.newyorktimesbooks.data.NewYorkTimesService
+import com.lucascabral.newyorktimesbooks.data.RetrofitClient
 import com.lucascabral.newyorktimesbooks.data.model.Book
+import com.lucascabral.newyorktimesbooks.data.response.BookBodyResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BooksViewModel : ViewModel() {
 
@@ -11,16 +17,31 @@ class BooksViewModel : ViewModel() {
     var books: LiveData<List<Book>> = booksLiveData
 
     fun getBooks() {
-        booksLiveData.value = createFakeBooks()
-    }
+        val remote = RetrofitClient.createService(NewYorkTimesService::class.java)
+        val call: Call<BookBodyResponse> = remote.getBooks()
+        call.enqueue(object: Callback<BookBodyResponse>{
+            override fun onResponse(call: Call<BookBodyResponse>, response: Response<BookBodyResponse>) {
+                if (response.isSuccessful) {
+                    val books: MutableList<Book> = mutableListOf()
 
-    private fun createFakeBooks(): List<Book> {
-        return listOf(
-            Book("Title1", "Author1"),
-            Book("Title2", "Author2"),
-            Book("Title3", "Author3"),
-            Book("Title4", "Author4"),
-            Book("Title8", "Author8")
-        )
+                    response.body()?.let {
+                        for (result in it.results) {
+                            val book = Book(
+                              title = result.book_details[0].title,
+                              author = result.book_details[0].author
+                            )
+
+                            books.add(book)
+                        }
+                    }
+                    booksLiveData.value = books
+                }
+            }
+
+            override fun onFailure(call: Call<BookBodyResponse>, t: Throwable) {
+                val str = ""
+            }
+
+        })
     }
 }

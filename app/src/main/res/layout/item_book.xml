@@ -10,7 +10,7 @@
         android:id="@+id/bookTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000"
+        android:textColor="@color/purple_500"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="Title" />
@@ -19,7 +19,7 @@
         android:id="@+id/bookAuthorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000"
+        android:textColor="@color/black"
         android:textSize="14sp"
         tools:text="Author" />
 
