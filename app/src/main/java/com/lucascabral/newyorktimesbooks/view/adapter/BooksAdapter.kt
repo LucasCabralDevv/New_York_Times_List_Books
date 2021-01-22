@@ -1,4 +1,4 @@
-package com.lucascabral.newyorktimesbooks.adapter
+package com.lucascabral.newyorktimesbooks.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
