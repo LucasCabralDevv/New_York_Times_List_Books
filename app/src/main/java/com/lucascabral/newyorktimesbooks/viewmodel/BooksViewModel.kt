@@ -25,10 +25,11 @@ class BooksViewModel : ViewModel() {
                     val books: MutableList<Book> = mutableListOf()
 
                     response.body()?.let {
-                        for (result in it.results) {
+                        for (result in it.bookResults) {
                             val book = Book(
-                              title = result.book_details[0].title,
-                              author = result.book_details[0].author
+                              title = result.bookDetailsResponse[0].title,
+                              author = result.bookDetailsResponse[0].author,
+                              description = result.bookDetailsResponse[0].description
                             )
 
                             books.add(book)

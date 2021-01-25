@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class BookBodyResponse (
         @SerializedName("results")
-        val results: List<BookResultResponse>
+        val bookResults: List<BookResultResponse>
 )
