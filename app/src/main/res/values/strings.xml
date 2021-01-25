@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">New York Times Books</string>
-    <string name="toolbarMain_title">Books</string>
+    <string name="toolbarMain_home_title">Books</string>
+    <string name="toolbarMain_details_title">Books Details</string>
 
     // Book Details
     <string name="book_details_title_label">Title</string>

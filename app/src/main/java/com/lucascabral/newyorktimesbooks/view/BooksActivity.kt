@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lucascabral.newyorktimesbooks.R
 import com.lucascabral.newyorktimesbooks.view.adapter.BooksAdapter
-import com.lucascabral.newyorktimesbooks.data.model.Book
+import com.lucascabral.newyorktimesbooks.view.base.BaseActivity
 import com.lucascabral.newyorktimesbooks.viewmodel.BooksViewModel
 import kotlinx.android.synthetic.main.activity_books.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
-class BooksActivity : AppCompatActivity() {
+class BooksActivity : BaseActivity() {
 
     private lateinit var viewModel: BooksViewModel
 
@@ -20,7 +21,7 @@ class BooksActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
 
-        setupToolbar()
+        setupToolbar(toolbarMain, R.string.toolbarMain_home_title)
 
         viewModel = ViewModelProvider(this).get(BooksViewModel::class.java)
         viewModel.books.observe(this, Observer {
@@ -36,10 +37,5 @@ class BooksActivity : AppCompatActivity() {
             }
         })
         viewModel.getBooks()
-    }
-
-    private fun setupToolbar() {
-        toolbarMain.title = getString(R.string.toolbarMain_title)
-        setSupportActionBar(toolbarMain)
     }
 }
