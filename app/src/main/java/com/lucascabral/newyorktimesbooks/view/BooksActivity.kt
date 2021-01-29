@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lucascabral.newyorktimesbooks.R
+import com.lucascabral.newyorktimesbooks.data.repository.BooksApiDataSource
 import com.lucascabral.newyorktimesbooks.view.adapter.BooksAdapter
 import com.lucascabral.newyorktimesbooks.view.base.BaseActivity
 import com.lucascabral.newyorktimesbooks.viewmodel.BooksViewModel
@@ -23,7 +24,9 @@ class BooksActivity : BaseActivity() {
 
         setupToolbar(toolbarMain, R.string.toolbarMain_home_title)
 
-        viewModel = ViewModelProvider(this).get(BooksViewModel::class.java)
+        val viewModel = BooksViewModel.ViewModelFactory(BooksApiDataSource())
+            .create(BooksViewModel::class.java)
+
         viewModel.books.observe(this, Observer {
             it?.let {
                 with(booksRecyclerView) {
