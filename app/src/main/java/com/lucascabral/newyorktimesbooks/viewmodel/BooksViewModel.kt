@@ -6,17 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.lucascabral.newyorktimesbooks.R
 import com.lucascabral.newyorktimesbooks.data.BooksResult
-import com.lucascabral.newyorktimesbooks.data.NewYorkTimesService
-import com.lucascabral.newyorktimesbooks.data.RetrofitClient
 import com.lucascabral.newyorktimesbooks.data.model.Book
 import com.lucascabral.newyorktimesbooks.data.repository.BooksRepository
-import com.lucascabral.newyorktimesbooks.data.response.BookBodyResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.lang.IllegalArgumentException
 
-class BooksViewModel(val dataSource: BooksRepository) : ViewModel() {
+class BooksViewModel(private val dataSource: BooksRepository) : ViewModel() {
 
     private val booksLiveData: MutableLiveData<List<Book>> = MutableLiveData()
     var books: LiveData<List<Book>> = booksLiveData
@@ -48,7 +42,7 @@ class BooksViewModel(val dataSource: BooksRepository) : ViewModel() {
         }
     }
 
-    class ViewModelFactory(val dataSource: BooksRepository) : ViewModelProvider.Factory {
+    class ViewModelFactory(private val dataSource: BooksRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(BooksViewModel::class.java)) {
                 return BooksViewModel(dataSource) as T
