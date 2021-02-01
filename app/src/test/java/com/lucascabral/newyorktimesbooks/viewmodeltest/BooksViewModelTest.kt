@@ -2,6 +2,7 @@ package com.lucascabral.newyorktimesbooks.viewmodeltest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.lucascabral.newyorktimesbooks.R
 import com.lucascabral.newyorktimesbooks.data.BooksResult
 import com.lucascabral.newyorktimesbooks.data.model.Book
 import com.lucascabral.newyorktimesbooks.data.repository.BooksRepository
@@ -53,6 +54,20 @@ class BooksViewModelTest {
         //Assert
         verify(booksLiveDataObserver).onChanged(books)
         verify(viewFlipperLiveDataObserver).onChanged(Pair(1, null))
+    }
+
+    @Test
+    fun `when view model getBooks get server error then sets booksLiveData`() {
+        //Arrange
+        val resultServerError = MockRepository(BooksResult.ServerError)
+        viewModel = BooksViewModel(resultServerError)
+        viewModel.viewFlipper.observeForever(viewFlipperLiveDataObserver)
+
+        //Act
+        viewModel.getBooks()
+        
+        //Assert
+        verify(viewFlipperLiveDataObserver).onChanged(Pair(2, R.string.book_error_500_generic))
     }
 }
 
